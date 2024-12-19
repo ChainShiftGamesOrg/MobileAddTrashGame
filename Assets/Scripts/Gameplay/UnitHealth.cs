@@ -1,19 +1,15 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
 
 public class UnitHealth : MonoBehaviour
 {
-    public FloatVariable HP;
-
-    public bool ResetHP;
-    public FloatReference StartingHP;
-    public UnityEvent DamageEvent;
     public UnityEvent DeathEvent;
+
+    public IObjectPool<GameObject> ObjectPool;
 
     private void Start()
     {
-        if (ResetHP)
-            HP.SetValue(StartingHP);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,13 +17,13 @@ public class UnitHealth : MonoBehaviour
         DamageDealer damage = other.gameObject.GetComponent<DamageDealer>();
         if (damage != null)
         {
-            HP.ApplyChange(-damage.DamageAmount);
-            DamageEvent.Invoke();
+            Die();
         }
+    }
 
-        if (HP.Value <= 0.0f)
-        {
-            DeathEvent.Invoke();
-        }
+    private void Die()
+    {
+        ObjectPool.Release(gameObject);
+        DeathEvent?.Invoke();
     }
 }

@@ -3,21 +3,22 @@ using UnityEngine.AI;
 
 public class PlayerSphereFollower : MonoBehaviour
 {
-    public GameObject PlayerSphere;
+    private GameObject _playerSphere;
     private PlayerSphereMovement _playerSphereMovement;
     private NavMeshAgent _agent;
 
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _playerSphereMovement = PlayerSphere.GetComponent<PlayerSphereMovement>();
+        _playerSphere = GameObject.FindGameObjectWithTag("Player");
+        _playerSphereMovement = _playerSphere.GetComponent<PlayerSphereMovement>();
     }
 
     private void Update()
     {
-        if (PlayerSphere != null)
+        if (_playerSphere != null)
         {
-            _agent.SetDestination(PlayerSphere.transform.position);
+            _agent.SetDestination(_playerSphere.transform.position);
             RotateModel();
         }
         else
