@@ -20,7 +20,7 @@ public class PlayerObjectPool : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 80; i++)
         {
             objectPool.Get();
         }

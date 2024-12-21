@@ -18,6 +18,7 @@ public class PlayerSphereFollower : MonoBehaviour
     {
         if (_playerSphere != null)
         {
+            Debug.Log(_agent.obstacleAvoidanceType);
             _agent.SetDestination(_playerSphere.transform.position);
             RotateModel();
         }
